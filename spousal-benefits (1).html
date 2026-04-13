@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Social Security Spousal & Survivor Benefits</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+      padding: 20px;
+    }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #003087 0%, #0057a8 100%);
+      color: white;
+      padding: 32px 36px 24px;
+    }
+    .header h1 { font-size: 1.7rem; margin-bottom: 8px; }
+    .header p { opacity: 0.88; font-size: 0.97rem; line-height: 1.6; }
+
+    .scenarios { padding: 30px 36px; }
+
+    .scenario-card {
+      border-radius: 10px;
+      border: 1.5px solid #d0dcf5;
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+    .scenario-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      background: #003087;
+      color: white;
+    }
+    .scenario-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+    .scenario-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .scenario-header p {
+      font-size: 0.83rem;
+      opacity: 0.85;
+      margin-top: 2px;
+    }
+    .scenario-body {
+      padding: 18px 20px;
+      background: #f8faff;
+    }
+    .scenario-body ul {
+      list-style: none;
+      padding: 0;
+    }
+    .scenario-body ul li {
+      padding: 7px 0 7px 22px;
+      position: relative;
+      font-size: 0.93rem;
+      line-height: 1.55;
+      border-bottom: 1px solid #e8edf3;
+    }
+    .scenario-body ul li:last-child { border-bottom: none; }
+    .scenario-body ul li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #0057a8;
+      font-weight: 700;
+    }
+    .tip-box {
+      background: #fff8e1;
+      border: 1.5px solid #ffe082;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+    .tip-box strong { color: #e65100; }
+
+    .important-box {
+      background: #e8f5e9;
+      border: 1.5px solid #a5d6a7;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 0 36px 30px;
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+    .important-box h3 { color: #1b5e20; margin-bottom: 8px; font-size: 1rem; }
+
+    .cta-section {
+      background: linear-gradient(135deg, #003087, #0057a8);
+      color: white;
+      text-align: center;
+      padding: 28px 36px;
+    }
+    .cta-section p { font-size: 1rem; margin-bottom: 16px; opacity: 0.92; }
+    .btn-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      background: #fff;
+      color: #003087;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-cta:hover { background: #e8edf8; }
+    .disclaimer {
+      font-size: 0.78rem;
+      color: #888;
+      text-align: center;
+      padding: 14px 36px 20px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 560px) {
+      .scenarios, .header { padding: 20px; }
+      .important-box { margin: 0 20px 24px; }
+      .cta-section { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Social Security Spousal &amp; Survivor Benefits</h1>
+    <p>Your marital history directly affects your Social Security options. Here's what you need to know for each situation.</p>
+  </div>
+
+  <div class="scenarios">
+
+    <!-- Married -->
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <div class="scenario-icon">💑</div>
+        <div>
+          <h2>Currently Married</h2>
+          <p>Spousal benefit based on your spouse's work record</p>
+        </div>
+      </div>
+      <div class="scenario-body">
+        <ul>
+          <li>You may claim up to <strong>50% of your spouse's Full Retirement Age (FRA) benefit</strong> — whichever is higher between your own benefit or the spousal benefit</li>
+          <li>You must be at least <strong>age 62</strong> to claim a spousal benefit (or any age if caring for a child under 16)</li>
+          <li>Your spouse must have already filed for their own Social Security benefit before you can claim on their record</li>
+          <li>Claiming before your own FRA reduces the spousal benefit — claiming at your FRA gives you the full 50%</li>
+          <li>Delaying past your FRA does <strong>not</strong> increase the spousal benefit beyond 50%</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Strategy Tip:</strong> If your own benefit is lower than 50% of your spouse's, it may make sense to claim the spousal benefit. A licensed advisor can help you compare both options side by side.
+        </div>
+      </div>
+    </div>
+
+    <!-- Divorced -->
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <div class="scenario-icon">📋</div>
+        <div>
+          <h2>Divorced</h2>
+          <p>You may still qualify based on your ex-spouse's record</p>
+        </div>
+      </div>
+      <div class="scenario-body">
+        <ul>
+          <li>You must have been married for <strong>at least 10 years</strong> to qualify for divorced spousal benefits</li>
+          <li>You must currently be <strong>unmarried</strong></li>
+          <li>You can receive up to <strong>50% of your ex-spouse's FRA benefit</strong> — without reducing their benefit or affecting their current spouse</li>
+          <li>Your ex-spouse does <strong>not</strong> need to have filed yet — as long as you've been divorced for at least 2 years and you're both age 62+</li>
+          <li>Your own benefit and the divorced spousal benefit are compared — Social Security pays the higher amount</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Strategy Tip:</strong> Many divorced individuals don't realize they qualify. If you were married 10+ years, it's worth checking even if you've lost touch with your ex — SSA uses their earnings record, not their cooperation.
+        </div>
+      </div>
+    </div>
+
+    <!-- Widowed -->
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <div class="scenario-icon">🕊️</div>
+        <div>
+          <h2>Widowed</h2>
+          <p>Survivor benefits — often the most valuable option</p>
+        </div>
+      </div>
+      <div class="scenario-body">
+        <ul>
+          <li>As a surviving spouse, you can receive <strong>up to 100%</strong> of your deceased spouse's benefit — significantly more than the 50% spousal benefit</li>
+          <li>Survivor benefits can begin as early as <strong>age 60</strong> (age 50 if disabled)</li>
+          <li>If you claim survivor benefits before your own FRA, the amount is reduced</li>
+          <li><strong>Powerful strategy:</strong> You can claim reduced survivor benefits early, then switch to your own (higher) benefit later — or vice versa</li>
+          <li>Remarrying before age 60 generally disqualifies you from survivor benefits on a prior spouse's record</li>
+          <li>You may also qualify if your deceased ex-spouse's benefit is higher than your own, even after divorce</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Strategy Tip:</strong> The "claim one, switch to the other" approach can add tens of thousands of dollars in lifetime benefits for widows and widowers. This is one of the most impactful planning opportunities in all of Social Security.
+        </div>
+      </div>
+    </div>
+
+    <!-- Never Married / Single -->
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <div class="scenario-icon">👤</div>
+        <div>
+          <h2>Single / Never Married</h2>
+          <p>Your benefit is based entirely on your own work record</p>
+        </div>
+      </div>
+      <div class="scenario-body">
+        <ul>
+          <li>Your benefit is calculated solely from your own 35 highest-earning years</li>
+          <li>Claiming age matters most — waiting from 62 to 70 can increase your monthly benefit by <strong>up to 76%</strong></li>
+          <li>If you have fewer than 35 years of earnings, zeros are averaged in — working longer can increase your benefit</li>
+          <li>Use our free calculator to compare your estimated benefit at every age from 62 to 70</li>
+        </ul>
+        <div class="tip-box">
+          <strong>💡 Strategy Tip:</strong> Since there's no spousal benefit to fall back on, the claiming age decision is especially important for single individuals. Delaying to 70 provides the highest possible monthly income and the best longevity protection.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="important-box">
+    <h3>⚠️ Important Note on Spousal & Survivor Benefits</h3>
+    These rules involve many nuances — income limits, GPO/WEP offsets for government pensions, remarriage rules, and more. The scenarios above cover the most common situations, but your specific circumstances may affect your options. Speaking with a licensed advisor before filing can help you avoid costly, irreversible mistakes.
+  </div>
+
+  <div class="cta-section">
+    <p>Want to know which scenario applies to you and what your best strategy is?</p>
+    <a class="btn-cta" href="tel:2695324116">📞 Call Us Today: (269) 532-4116</a>
+  </div>
+  <div class="disclaimer">
+    This page is for educational purposes only and does not constitute legal or financial advice.
+    Social Security rules are complex and subject to change. Contact the SSA or a licensed advisor for personalized guidance.
+  </div>
+</div>
+</body>
+</html>
