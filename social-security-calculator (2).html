@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Social Security Benefit Estimator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+      padding: 20px;
+    }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #003087 0%, #0057a8 100%);
+      color: white;
+      padding: 32px 36px 24px;
+    }
+    .header h1 { font-size: 1.7rem; margin-bottom: 6px; }
+    .header p { opacity: 0.88; font-size: 0.97rem; }
+    .form-section {
+      padding: 30px 36px;
+      border-bottom: 1px solid #e8edf3;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    @media (max-width: 560px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-section, .header { padding: 20px; }
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #d0d7e2;
+      border-radius: 7px;
+      font-size: 1rem;
+      background: #f9fafb;
+      transition: border 0.2s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #0057a8;
+      background: #fff;
+    }
+    .btn-calculate {
+      display: block;
+      width: 100%;
+      margin-top: 22px;
+      padding: 14px;
+      background: linear-gradient(135deg, #003087, #0057a8);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s;
+    }
+    .btn-calculate:hover { opacity: 0.92; }
+    .results-section {
+      padding: 30px 36px;
+      display: none;
+    }
+    .results-section.visible { display: block; }
+    .result-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 560px) {
+      .result-cards { grid-template-columns: 1fr; }
+    }
+    .card {
+      background: #f0f5ff;
+      border-radius: 10px;
+      padding: 18px 14px;
+      text-align: center;
+      border: 1.5px solid #d0dcf5;
+    }
+    .card .card-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #0057a8;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .card .card-value {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #003087;
+    }
+    .card .card-sub {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 4px;
+    }
+    h3 {
+      font-size: 1.05rem;
+      color: #003087;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+    thead tr { background: #003087; color: white; }
+    thead th { padding: 10px 12px; text-align: left; font-weight: 600; }
+    tbody tr:nth-child(even) { background: #f4f7fb; }
+    tbody tr.highlight { background: #fff3cd; font-weight: 700; }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid #e8edf3; }
+    .breakeven-box {
+      background: #e8f5e9;
+      border: 1.5px solid #a5d6a7;
+      border-radius: 9px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+    .breakeven-box strong { color: #1b5e20; }
+    .cta-section {
+      background: linear-gradient(135deg, #003087, #0057a8);
+      color: white;
+      text-align: center;
+      padding: 28px 36px;
+    }
+    .cta-section p {
+      font-size: 1rem;
+      margin-bottom: 16px;
+      opacity: 0.92;
+    }
+    .btn-cta {
+      display: inline-block;
+      padding: 14px 36px;
+      background: #fff;
+      color: #003087;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-cta:hover { background: #e8edf8; }
+    .disclaimer {
+      font-size: 0.78rem;
+      color: #888;
+      text-align: center;
+      padding: 14px 36px 20px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Social Security Benefit Estimator</h1>
+    <p>Estimate your monthly benefit and find your optimal claiming age.</p>
+  </div>
+
+  <div class="form-section">
+    <div class="form-grid">
+      <div>
+        <label for="birthYear">Birth Year</label>
+        <input type="number" id="birthYear" placeholder="e.g. 1962" min="1943" max="2000" />
+      </div>
+      <div>
+        <label for="income">Current Annual Income ($)</label>
+        <input type="number" id="income" placeholder="e.g. 65000" min="0" />
+      </div>
+      <div>
+        <label for="yearsWorked">Years Worked</label>
+        <input type="number" id="yearsWorked" placeholder="e.g. 30" min="1" max="50" />
+      </div>
+      <div>
+        <label for="claimAge">Planned Claiming Age</label>
+        <select id="claimAge">
+          <option value="62">62 (Early)</option>
+          <option value="63">63</option>
+          <option value="64">64</option>
+          <option value="65">65</option>
+          <option value="66">66</option>
+          <option value="67" selected>67 (Full Retirement)</option>
+          <option value="68">68</option>
+          <option value="69">69</option>
+          <option value="70">70 (Maximum)</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-calculate" onclick="calculate()">Calculate My Benefit</button>
+  </div>
+
+  <div class="results-section" id="results">
+    <div class="result-cards">
+      <div class="card">
+        <div class="card-label">Monthly Benefit</div>
+        <div class="card-value" id="monthlyBenefit">—</div>
+        <div class="card-sub">at your chosen age</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Annual Benefit</div>
+        <div class="card-value" id="annualBenefit">—</div>
+        <div class="card-sub">per year</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Full Retirement Age</div>
+        <div class="card-value" id="fraDisplay">—</div>
+        <div class="card-sub">your FRA</div>
+      </div>
+    </div>
+
+    <h3>Benefit Comparison by Claiming Age</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Claiming Age</th>
+          <th>Monthly Benefit</th>
+          <th>Annual Benefit</th>
+          <th>Lifetime Total (to 85)</th>
+        </tr>
+      </thead>
+      <tbody id="comparisonTable"></tbody>
+    </table>
+
+    <h3>Break-Even Analysis</h3>
+    <div class="breakeven-box" id="breakevenBox"></div>
+    <div id="chartWrap" style="display:none; margin-top:20px;">
+      <h3 style="margin-bottom:12px;">Cumulative Lifetime Benefits by Age</h3>
+      <canvas id="breakevenChart" style="width:100%;max-height:320px;"></canvas>
+      <div style="display:flex;gap:20px;margin-top:10px;font-size:0.82rem;flex-wrap:wrap;">
+        <span><span style="display:inline-block;width:14px;height:14px;background:#6c9bd2;border-radius:3px;vertical-align:middle;margin-right:5px;"></span>Claim at 62</span>
+        <span><span style="display:inline-block;width:14px;height:14px;background:#003087;border-radius:3px;vertical-align:middle;margin-right:5px;"></span>Your Chosen Age</span>
+        <span><span style="display:inline-block;width:3px;height:14px;background:#e53935;display:inline-block;vertical-align:middle;margin-right:5px;"></span>Break-Even Point</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <p>Want personalized guidance on your Social Security strategy?</p>
+    <a class="btn-cta" href="tel:2695324116">📞 Call Us Today: (269) 532-4116</a>
+  </div>
+  <div class="disclaimer">
+    This estimator provides general estimates based on the SSA bend point formula and is for educational purposes only.
+    Actual benefits may vary. Contact the Social Security Administration or a licensed advisor for personalized advice.
+  </div>
+</div>
+
+<script>
+  function getFRA(birthYear) {
+    if (birthYear <= 1937) return 65;
+    if (birthYear <= 1942) return 65 + (birthYear - 1937) * 2 / 12;
+    if (birthYear <= 1954) return 66;
+    if (birthYear <= 1959) return 66 + (birthYear - 1954) * 2 / 12;
+    return 67;
+  }
+
+  function computeAIME(income, yearsWorked) {
+    const cappedIncome = Math.min(income, 168600);
+    const estimated35YearAvg = cappedIncome * Math.min(yearsWorked, 35) / 35;
+    return estimated35YearAvg / 12;
+  }
+
+  function computePIA(aime) {
+    const bp1 = 1174, bp2 = 7078;
+    let pia = 0;
+    if (aime <= bp1) {
+      pia = aime * 0.90;
+    } else if (aime <= bp2) {
+      pia = bp1 * 0.90 + (aime - bp1) * 0.32;
+    } else {
+      pia = bp1 * 0.90 + (bp2 - bp1) * 0.32 + (aime - bp2) * 0.15;
+    }
+    return Math.round(pia);
+  }
+
+  function getAdjustedBenefit(pia, claimAge, fra) {
+    const diff = claimAge - fra;
+    let factor = 1.0;
+    if (diff < 0) {
+      const months = Math.abs(diff) * 12;
+      const first36 = Math.min(months, 36);
+      const remaining = Math.max(months - 36, 0);
+      factor = 1 - (first36 * 5/9 + remaining * 5/12) / 100;
+    } else if (diff > 0) {
+      factor = 1 + diff * 0.08;
+    }
+    return Math.round(pia * factor);
+  }
+
+  function fmt(n) {
+    return '$' + n.toLocaleString();
+  }
+
+  function calculate() {
+    const birthYear = parseInt(document.getElementById('birthYear').value);
+    const income = parseFloat(document.getElementById('income').value);
+    const yearsWorked = parseInt(document.getElementById('yearsWorked').value);
+    const claimAge = parseInt(document.getElementById('claimAge').value);
+
+    if (!birthYear || !income || !yearsWorked) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    const fra = getFRA(birthYear);
+    const aime = computeAIME(income, yearsWorked);
+    const pia = computePIA(aime);
+    const chosenMonthly = getAdjustedBenefit(pia, claimAge, fra);
+    const chosenAnnual = chosenMonthly * 12;
+
+    document.getElementById('monthlyBenefit').textContent = fmt(chosenMonthly);
+    document.getElementById('annualBenefit').textContent = fmt(chosenAnnual);
+    document.getElementById('fraDisplay').textContent = Number.isInteger(fra) ? fra : fra.toFixed(1);
+
+    const ages = [62, 64, 66, 67, 70];
+    const tbody = document.getElementById('comparisonTable');
+    tbody.innerHTML = '';
+
+    ages.forEach(age => {
+      const monthly = getAdjustedBenefit(pia, age, fra);
+      const annual = monthly * 12;
+      const yearsCollecting = Math.max(0, 85 - age);
+      const lifetime = monthly * 12 * yearsCollecting;
+      const tr = document.createElement('tr');
+      if (age === claimAge) tr.classList.add('highlight');
+      tr.innerHTML = `
+        <td>${age}${age === claimAge ? ' ✓ Your Choice' : ''}</td>
+        <td>${fmt(monthly)}</td>
+        <td>${fmt(annual)}</td>
+        <td>${fmt(lifetime)}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    // Break-even vs age 62
+    const monthly62 = getAdjustedBenefit(pia, 62, fra);
+    const monthlyChosen = chosenMonthly;
+    let breakevenText = '';
+    if (claimAge > 62) {
+      const monthlyDiff = monthlyChosen - monthly62;
+      if (monthlyDiff > 0) {
+        const monthsForegone = (claimAge - 62) * 12;
+        const totalForegone = monthly62 * monthsForegone;
+        const breakevenMonths = totalForegone / monthlyDiff;
+        const breakevenAge = claimAge + breakevenMonths / 12;
+        breakevenText = `By waiting until <strong>age ${claimAge}</strong> instead of claiming at 62, you receive 
+        <strong>${fmt(monthlyDiff)}/month more</strong>. You'll break even at approximately 
+        <strong>age ${breakevenAge.toFixed(1)}</strong> — meaning if you live past that age, 
+        waiting pays off. The later you claim, the more you benefit from a longer lifespan.`;
+      } else {
+        breakevenText = 'Your chosen claiming age results in a lower monthly benefit than claiming at 62. Consider if early access to funds outweighs the long-term difference.';
+      }
+    } else {
+      breakevenText = 'You selected age 62 (the earliest possible). While you start collecting sooner, your monthly benefit is reduced. If you can wait, delaying even a few years significantly increases your lifetime benefit.';
+    }
+    document.getElementById('breakevenBox').innerHTML = breakevenText;
+
+    // Draw break-even chart
+    if (claimAge > 62) {
+      drawBreakevenChart(pia, fra, claimAge, monthly62);
+    } else {
+      document.getElementById('chartWrap').style.display = 'none';
+    }
+
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function drawBreakevenChart(pia, fra, claimAge, monthly62) {
+    const monthlyChosen = getAdjustedBenefit(pia, claimAge, fra);
+    const labels = [];
+    const data62 = [];
+    const dataChosen = [];
+    let breakevenX = null;
+
+    for (let age = 62; age <= 90; age++) {
+      labels.push(age);
+      const years62 = Math.max(0, age - 62);
+      const yearsChosen = Math.max(0, age - claimAge);
+      const cum62 = monthly62 * 12 * years62;
+      const cumChosen = monthlyChosen * 12 * yearsChosen;
+      data62.push(cum62);
+      dataChosen.push(cumChosen);
+      if (breakevenX === null && cumChosen >= cum62 && age > claimAge) {
+        breakevenX = age;
+      }
+    }
+
+    document.getElementById('chartWrap').style.display = 'block';
+    const ctx = document.getElementById('breakevenChart').getContext('2d');
+    if (window._breakevenChartInstance) window._breakevenChartInstance.destroy();
+
+    const annotations = {};
+    if (breakevenX !== null) {
+      annotations.breakeven = {
+        type: 'line',
+        xMin: breakevenX,
+        xMax: breakevenX,
+        borderColor: '#e53935',
+        borderWidth: 2,
+        borderDash: [6, 3],
+        label: {
+          content: `Break-even: Age ${breakevenX}`,
+          enabled: true,
+          position: 'start',
+          backgroundColor: '#e53935',
+          color: '#fff',
+          font: { size: 11, weight: 'bold' },
+          padding: 4
+        }
+      };
+    }
+
+    window._breakevenChartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Claim at 62',
+            data: data62,
+            borderColor: '#6c9bd2',
+            backgroundColor: 'rgba(108,155,210,0.08)',
+            borderWidth: 2,
+            pointRadius: 0,
+            fill: true,
+            tension: 0.3
+          },
+          {
+            label: `Claim at ${claimAge}`,
+            data: dataChosen,
+            borderColor: '#003087',
+            backgroundColor: 'rgba(0,48,135,0.08)',
+            borderWidth: 2.5,
+            pointRadius: 0,
+            fill: true,
+            tension: 0.3
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.dataset.label}: $${ctx.parsed.y.toLocaleString()}`
+            }
+          },
+          annotation: { annotations }
+        },
+        scales: {
+          x: {
+            title: { display: true, text: 'Age', font: { size: 12 } },
+            ticks: { maxTicksLimit: 15 }
+          },
+          y: {
+            title: { display: true, text: 'Cumulative Benefits', font: { size: 12 } },
+            ticks: {
+              callback: val => '$' + (val >= 1000 ? (val/1000).toFixed(0) + 'k' : val)
+            }
+          }
+        }
+      }
+    });
+  }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/3.0.1/chartjs-plugin-annotation.min.js"></script>
+</body>
+</html>
